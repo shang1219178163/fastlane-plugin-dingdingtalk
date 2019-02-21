@@ -37,16 +37,14 @@ module Fastlane
 
       def self.run(params)
         UI.message("The dingdingtalk plugin is working!")
-        # UI.message("----------doing something--------------")
-        # UI.message("The dingdingtalk plugin is finished!")
 
-        params = {
-                  ipaDir: "/Users/shang/ECP/ecp-ios/firim",
-                  ipaName: "ParkingWangCoupon",
-                  appUrl: "https://fir.im/zk9r",
-                  appIcon: "https://is1-ssl.mzstatic.com/image/thumb/Purple/v4/aa/2f/f1/aa2ff185-feca-4800-5bee-85e3406ac648/Icon-76@2x.png.png/75x9999bb.png",
-                  dingUrl: "https://oapi.dingtalk.com/robot/send?access_token=f5a84c40838aef49cbf38f511bf4fcc4b9bafd6e845b7e691edf1b2660576528"
-                }
+        # params = {
+        #           ipaDir: "/Users/shang/ECP/ecp-ios/firim",
+        #           ipaName: "ParkingWangCoupon",
+        #           appUrl: "https://fir.im/zk9r",
+        #           appIcon: "https://is1-ssl.mzstatic.com/image/thumb/Purple/v4/aa/2f/f1/aa2ff185-feca-4800-5bee-85e3406ac648/Icon-76@2x.png.png/75x9999bb.png",
+        #           dingUrl: "https://oapi.dingtalk.com/robot/send?access_token=f5a84c40838aef49cbf38f511bf4fcc4b9bafd6e845b7e691edf1b2660576528"
+        #         }
         # puts "-----------#{params}-------------------"
 
         send_dingTalk(
@@ -55,7 +53,6 @@ module Fastlane
           params[:appIcon],
           params[:dingUrl]
         )
-
       end
 
       def self.description
@@ -78,10 +75,12 @@ module Fastlane
       def self.available_options
         [
            FastlaneCore::ConfigItem.new(key: :ipaDir,
+                                   env_name: "GET_IPA",
                                 description: "ipa文件所在的文件夹路径",
                                    optional: false,
                                        type: String),
            FastlaneCore::ConfigItem.new(key: :ipaName,
+                                   env_name: "GET_IPA_NAME",
                                 description: "ipa文件名称",
                                    optional: false,
                                        type: String),
@@ -91,7 +90,7 @@ module Fastlane
                                        type: String),
            FastlaneCore::ConfigItem.new(key: :appIcon,
                                 description: "ipa图标网络地址",
-                                   optional: false,
+                                   optional: true,
                                        type: String),
            FastlaneCore::ConfigItem.new(key: :dingUrl,
                                 description: "钉钉机器人网络接口",
