@@ -1,3 +1,24 @@
 lane :test do
-  dingdingtalk
+  # dingdingtalk
+  handleDingTalkParams("绝对路径")
+end
+
+#通用参数设置
+def handleDingTalkParams(ipaDir)
+  ipaName = "ParkingWangCoupon"
+  appPath = ipaDir + "/#{ipaName}.ipa"
+  appUrl  = "fir二维码下载页网址"
+  appIcon = "appstore图标url"
+  dingUrl = "钉钉机器人webHook"
+
+  # handleDingTalk(appPath: appPath, appUrl: appUrl, appIcon: appIcon, dingUrl: dingUrl)
+  params = {
+              ipaDir: File.expand_path(ipaDir),
+             ipaName: ipaName,
+              appUrl: appUrl,
+              appIcon: appIcon,
+              dingUrl: dingUrl
+            }
+  puts "---#{params}--"
+  dingdingtalk(params)
 end
