@@ -1,3 +1,5 @@
+# Pluginfile 添加 gem "fastlane-plugin-dingdingtalk", git: "https://github.com/shang1219178163/fastlane-plugin-dingdingtalk"
+
 lane :test do
   # dingdingtalk
   handleDingTalkParams("绝对路径")
