@@ -1,12 +1,12 @@
 require 'fastlane/action'
 require_relative '../helper/dingdingtalk_helper'
 
-
 module Fastlane
   module Actions
     class DingdingtalkAction < Action
 
       def self.send_dingTalk(appPath, appUrl, appIcon, dingUrl)
+
         appName    = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleDisplayName")
         appVersion = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleShortVersionString")
         appBuild   = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleVersion")
