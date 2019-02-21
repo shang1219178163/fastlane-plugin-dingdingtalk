@@ -6,7 +6,7 @@ module Fastlane
   module Actions
     class DingdingtalkAction < Action
 
-      def self.send_dingTalk(appPath: appPath, appUrl: appUrl, appIcon: appIcon, dingUrl: dingUrl)
+      def self.send_dingTalk(appPath, appUrl, appIcon, dingUrl)
         appName    = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleDisplayName")
         appVersion = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleShortVersionString")
         appBuild   = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleVersion")
@@ -78,7 +78,7 @@ module Fastlane
 
       def self.available_options
         [
-          FastlaneCore::ConfigItem.new(key: :ipaDir,
+           FastlaneCore::ConfigItem.new(key: :ipaDir,
                                 description: "ipa文件所在的文件夹路径",
                                    optional: false,
                                        type: String),
@@ -86,10 +86,6 @@ module Fastlane
                                 description: "ipa文件名称",
                                    optional: false,
                                        type: String),
-           # FastlaneCore::ConfigItem.new(key: :appPath,
-           #                      description: "ipa文件路径",
-           #                         optional: false,
-           #                             type: String),
            FastlaneCore::ConfigItem.new(key: :appUrl,
                                 description: "fir的ipa文件下载网址",
                                    optional: false,
@@ -101,7 +97,7 @@ module Fastlane
            FastlaneCore::ConfigItem.new(key: :dingUrl,
                                 description: "钉钉机器人网络接口",
                                    optional: false,
-                                       type: String),
+                                       type: String)
         ]
       end
 
