@@ -11,7 +11,6 @@ def handleDingTalkParams(ipaDir)
   appIcon = "appstore图标url"
   dingUrl = "钉钉机器人webHook"
 
-  # handleDingTalk(appPath: appPath, appUrl: appUrl, appIcon: appIcon, dingUrl: dingUrl)
   params = {
               ipaDir: File.expand_path(ipaDir),
              ipaName: ipaName,
