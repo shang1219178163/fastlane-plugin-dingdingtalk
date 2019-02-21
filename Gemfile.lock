@@ -205,7 +205,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  fastlane
+  fastlane (>= 2.116.0)
   fastlane-plugin-dingdingtalk!
   fastlane-plugin-ruby
   pry

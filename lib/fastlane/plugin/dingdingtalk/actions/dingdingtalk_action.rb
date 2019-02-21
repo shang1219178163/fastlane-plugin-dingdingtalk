@@ -6,12 +6,9 @@ module Fastlane
     class DingdingtalkAction < Action
 
       def self.send_dingTalk(appPath, appUrl, appIcon, dingUrl)
-
-        # Fastlane.Actions.get_ipa_info_plist_value
-
-        appName    = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleDisplayName")
-        appVersion = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleShortVersionString")
-        appBuild   = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleVersion")
+        appName    = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleDisplayName")
+        appVersion = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleShortVersionString")
+        appBuild   = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleVersion")
 
         platformInfo = appPath.include?("fir") == true ? "已更新至fir" : "已上传至AppStoreConnect"
 
