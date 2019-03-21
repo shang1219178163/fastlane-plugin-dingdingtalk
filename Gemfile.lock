@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fastlane-plugin-dingdingtalk (1.0.0)
+    fastlane-plugin-dingdingtalk (1.1.3)
 
 GEM
   remote: https://rubygems.org/
