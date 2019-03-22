@@ -9,6 +9,7 @@ module Fastlane
         appName    = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleDisplayName")
         appVersion = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleShortVersionString")
         appBuild   = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleVersion")
+        ipaName    = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleName")#备用
 
         appName = appName.empty? == false ? appName : other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleBundleName")
 
@@ -16,8 +17,7 @@ module Fastlane
 
         title = "iOS #{appName} #{appVersion} #{platformInfo}"
 
-        markdown =
-        {
+        markdown ={
           msgtype: "link",
           link: {
               title: title,
@@ -28,9 +28,7 @@ module Fastlane
         }
 
         if markdownText
-          markdownText = "#{markdownText}   \n  - [下载地址](#{appUrl})"
-          puts markdownText
-
+          markdownText = "#{markdownText}   \n  - [Download](#{appUrl})"
           markdown ={
                "msgtype": "markdown",
                "markdown": {"title": "#{title}",
@@ -38,7 +36,6 @@ module Fastlane
                }
            }
         end
-
 
         uri = URI.parse(dingUrl)
         https = Net::HTTP.new(uri.host, uri.port)
