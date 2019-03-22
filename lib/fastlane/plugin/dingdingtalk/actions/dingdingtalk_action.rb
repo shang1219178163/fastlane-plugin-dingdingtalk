@@ -66,7 +66,7 @@ module Fastlane
         # puts "-----------#{params}-------------------"
 
         send_dingTalk(
-          params[:ipaDir] + "/#{params[:ipaName]}.ipa",
+          params[:appPath],
           params[:appUrl],
           params[:appIcon],
           params[:dingUrl],
@@ -94,7 +94,7 @@ module Fastlane
 
       def self.available_options
         [
-           FastlaneCore::ConfigItem.new(key: :ipaDir,
+           FastlaneCore::ConfigItem.new(key: :appPath,
                                    env_name: "GET_IPA",
                                 description: "ipa文件所在的文件夹路径",
                                    optional: false,
