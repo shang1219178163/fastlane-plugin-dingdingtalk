@@ -5,7 +5,7 @@ module Fastlane
   module Actions
     class DingdingtalkAction < Action
 
-      def self.send_dingTalk(appPath, appUrl, appIcon, dingUrl)
+      def self.send_dingTalk(appPath, appUrl, appIcon, dingUrl, markdownText = nil)
         appName    = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleDisplayName")
         appVersion = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleShortVersionString")
         appBuild   = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleVersion")
@@ -14,16 +14,32 @@ module Fastlane
 
         platformInfo = appPath.include?("fir") == true ? "已更新至fir" : "已上传至AppStoreConnect"
 
+        title = "iOS #{appName} #{appVersion} #{platformInfo}"
+
         markdown =
         {
           msgtype: "link",
           link: {
-              title: "iOS #{appName} #{appVersion} #{platformInfo}",
+              title: title,
               text: "版  本：#{appBuild}\n地  址：#{appUrl}\n时  间：#{Time.new.strftime('%Y-%m-%d %H:%M')}",
               picUrl: "#{appIcon}",
               messageUrl: "#{appUrl}"
           }
         }
+
+        if markdownText
+          markdownText = "#{markdownText}   \n  - [下载地址](#{appUrl})"
+          puts markdownText
+
+          markdown ={
+               "msgtype": "markdown",
+               "markdown": {"title": "#{title}",
+                            "text": "### #{title}\n#{markdownText}",
+               }
+           }
+        end
+
+
         uri = URI.parse(dingUrl)
         https = Net::HTTP.new(uri.host, uri.port)
         https.use_ssl = true
@@ -42,10 +58,10 @@ module Fastlane
 
         # params = {
         #           ipaDir: "/Users/shang/ECP/ecp-ios/firim",
-        #           ipaName: "ParkingWangCoupon",
-        #           appUrl: "https://fir.im/zk9r",
-        #           appIcon: "https://is1-ssl.mzstatic.com/image/thumb/Purple/v4/aa/2f/f1/aa2ff185-feca-4800-5bee-85e3406ac648/Icon-76@2x.png.png/75x9999bb.png",
-        #           dingUrl: "https://oapi.dingtalk.com/robot/send?access_token=f5a84c40838aef49cbf38f511bf4fcc4b9bafd6e845b7e691edf1b2660576528"
+        #           ipaName: "*",
+        #           appUrl: "fir的app下载网址",
+        #           appIcon: "appStore中app图标网址",
+        #           dingUrl: "钉钉机器人"
         #         }
         # puts "-----------#{params}-------------------"
 
@@ -53,7 +69,9 @@ module Fastlane
           params[:ipaDir] + "/#{params[:ipaName]}.ipa",
           params[:appUrl],
           params[:appIcon],
-          params[:dingUrl]
+          params[:dingUrl],
+          params[:markdownText]
+
         )
       end
 
@@ -81,11 +99,6 @@ module Fastlane
                                 description: "ipa文件所在的文件夹路径",
                                    optional: false,
                                        type: String),
-           FastlaneCore::ConfigItem.new(key: :ipaName,
-                                   env_name: "GET_IPA_NAME",
-                                description: "ipa文件名称",
-                                   optional: false,
-                                       type: String),
            FastlaneCore::ConfigItem.new(key: :appUrl,
                                 description: "fir的ipa文件下载网址",
                                    optional: false,
@@ -97,7 +110,11 @@ module Fastlane
            FastlaneCore::ConfigItem.new(key: :dingUrl,
                                 description: "钉钉机器人网络接口",
                                    optional: false,
-                                       type: String)
+                                       type: String),
+           FastlaneCore::ConfigItem.new(key: :markdownText,
+                                description: "钉钉机器人 msgtype: markdown时的text",
+                                   optional: true,
+                                       type: String),
         ]
       end
 
