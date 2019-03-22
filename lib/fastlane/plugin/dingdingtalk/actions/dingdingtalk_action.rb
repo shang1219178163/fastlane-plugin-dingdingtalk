@@ -9,7 +9,7 @@ module Fastlane
         appName    = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleDisplayName")
         appVersion = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleShortVersionString")
         appBuild   = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleVersion")
-        ipaName    = get_ipa_info_plist_value(ipa: appPath, key: "CFBundleName")#备用
+        ipaName    = other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleName")#备用
 
         appName = appName.empty? == false ? appName : other_action.get_ipa_info_plist_value(ipa: appPath, key: "CFBundleBundleName")
 
